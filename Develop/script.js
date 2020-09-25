@@ -17,15 +17,46 @@ $(document).ready(function() {
         var three = moment().hours(15).minutes(0).second(0);
         var four = moment().hours(16).minutes(0).second(0);
         var five = moment().hours(17).minutes(0).second(0);
-        $("#nine").text(nine.format('h:mm'));
-        $("#ten").text(ten.format('h:mm'));
-        $("#eleven").text(eleven.format('h:mm'));
-        $("#twelve").text(twelve.format('h:mm'));
-        $("#one").text(one.format('h:mm'));
-        $("#two").text(two.format('h:mm'));
-        $("#three").text(three.format('h:mm'));
-        $("#four").text(four.format('h:mm'));
-        $("#five").text(five.format('h:mm'));
+        $("#nine").text(nine.format('h'));
+        $("#ten").text(ten.format('h'));
+        $("#eleven").text(eleven.format('h'));
+        $("#twelve").text(twelve.format('h'));
+        $("#thirteen").text(one.format('h'));
+        $("#fourteen").text(two.format('h'));
+        $("#fifteen").text(three.format('h'));
+        $("#sixteen").text(four.format('h'));
+        $("#seventeen").text(five.format('h'));
+
+        $("#text").css("background-color","red");
+
+        var numLetts = {
+            nine: 9,
+            ten: 10,
+            eleven: 11,
+            twelve: 12,
+            thirteen: 13,
+            fourteen: 14,
+            fifteen: 15,
+            sixteen: 16,
+            seventeen: 17
+        };
+
+        $.each($(".hourHook"),function() {
+            var numConv = numLetts[($(this).find("span").attr('id'))];
+            var hourInt = moment().hours(numConv).seconds(0);
+            // console.log(numLetts[($(this).find("span").attr('id'))]);
+            if (hourInt.diff(moment(),'seconds') < -3600) {
+                $(this).next().css("background-color","#d3d3d3");
+            } else if (hourInt.diff(moment(),'seconds') > 0) {
+                $(this).next().css("background-color","#77dd77");
+            } else {
+                $(this).next().css("background-color","#ff6961");
+            }
+        })
+        
+
+
+        // $(".col-md-10").css("background-color",)
     } 
 
     // calling function to initially set time
@@ -35,8 +66,7 @@ $(document).ready(function() {
     // set interval to continuously call function
     setInterval(updateTime, 1000);
 
-    
-    
+
     var b = moment();
 
 });
