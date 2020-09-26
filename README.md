@@ -7,7 +7,7 @@
 
 ## Description
 
-
+Using the jQuery and Moment.js libraries eases the workload of manipulating the DOM, making the process a lot less tedious. In addition to shortening the process of creating elements, I was also able to implement additional functionalities to the scheduler that would otherwise have been much more difficult to do writing the javaScript myself. For instance, the each() function allowed me to loop through an object and return its keys and values if needed. This was utilized in creating each row's time blocks. The each() function also allowed me to loop through specific elements, which is how I color coded each textarea. 
 What was your motivation?
 
 Why did you build this project?
@@ -52,11 +52,6 @@ Licensed under the [MIT](https://github.com/microsoft/vscode/blob/master/LICENSE
 
 Create a simple calendar application that allows the user to save events for each hour of the day. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
 You'll need to use the Moment.js library to work with date and time. Be sure to read the documentation carefully and concentrate on using Moment.js in the browser.
-
-AS AN employee with a busy schedule
-I WANT to add important events to a daily planner
-SO THAT I can manage my time effectively
-
 
 GIVEN I am using a daily planner to create a schedule
 WHEN I open the planner
