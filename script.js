@@ -6,6 +6,16 @@ $(document).ready(function() {
         $("#currentDay").text(currentTime);
     };
 
+    // random cat fact
+    var catFacts = function() {
+        $.ajax({
+            url:"https://cat-fact.herokuapp.com/facts/random?animal_type=cat",
+            method: "GET"
+        }).then(function(response) {
+            $(".jumbotron").append($("<p>").text(JSON.stringify(response.text)));
+        }) 
+    };
+
     // object to aid in creating html elements using each()
     var numLetts = {
         seventeen: 17,
@@ -93,11 +103,11 @@ $(document).ready(function() {
     });
 
     // calling functions
+    catFacts();
     updateTime();
     colorCode();
-
-    // set interval to continuously call functions. ensures color coding is updated and that the displayed time is correct, by the second 
-    setInterval(updateTime, 1000);
+    
+    // set interval to continuously call functions. ensures color coding is updated by the second 
     setInterval(colorCode, 1000);
     
 });
