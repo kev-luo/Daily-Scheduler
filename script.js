@@ -6,47 +6,63 @@ $(document).ready(function() {
         $("#currentDay").text(currentTime);
     };
 
-    // setting hour block times
-    var updateColor = function () {
-        // sets hour block time to current day with fixed hours, minutes, and seconds
-        var nine = moment().hours(9).minutes(0).second(0);
-        var ten = moment().hours(10).minutes(0).second(0);
-        var eleven = moment().hours(11).minutes(0).second(0);
-        var twelve = moment().hours(12).minutes(0).second(0);
-        var thirteen = moment().hours(13).minutes(0).second(0);
-        var fourteen = moment().hours(14).minutes(0).second(0);
-        var fifteen = moment().hours(15).minutes(0).second(0);
-        var sixteen = moment().hours(16).minutes(0).second(0);
-        var seventeen = moment().hours(17).minutes(0).second(0);
-
-        // formats the hour block text to be non-military for easier reading
-        $("#nine").text(nine.format('h'));
-        $("#ten").text(ten.format('h'));
-        $("#eleven").text(eleven.format('h'));
-        $("#twelve").text(twelve.format('h'));
-        $("#thirteen").text(thirteen.format('h'));
-        $("#fourteen").text(fourteen.format('h'));
-        $("#fifteen").text(fifteen.format('h'));
-        $("#sixteen").text(sixteen.format('h'));
-        $("#seventeen").text(seventeen.format('h'));
+    // object to aid in creating html elements using each()
+    var numLetts = {
+        seventeen: 17,
+        sixteen: 16,
+        fifteen: 15,
+        fourteen: 14,
+        thirteen: 13,
+        twelve: 12,
+        eleven: 11,
+        ten: 10,
+        nine: 9
     };
 
-    // function to color code blocks
-    var colorCode = function() {
-        // create object with values equal to integers to aid time block coloring
-        var numLetts = {
-            nine: 9,
-            ten: 10,
-            eleven: 11,
-            twelve: 12,
-            thirteen: 13,
-            fourteen: 14,
-            fifteen: 15,
-            sixteen: 16,
-            seventeen: 17
-        };
+    // loop through key/value pairs in numLetts object and create html elements for each. values used to set hour block time. keys used to create id's.
+    $.each(numLetts,function(key,value) {
+        var $div = $("<div>", {
+            "class": "container"
+        });
 
-        // for each element with the hourHook class, apply the function that compares the current time with the set time in the hour block, and appropriately color the textarea
+        var $smallDiv = $("<div>", {
+            "class": "row justify-content-center"
+        });
+        
+        var $para = $("<p>", {
+            "class": "hour col-md-1 hourHook", 
+            style: "float:left"
+        });
+        
+        if (value>11) {
+            var $paraSpan = $("<span>", {
+                id: key,
+                text: moment().hours(value).minutes(0).seconds(0).format('h')+"PM"
+            });
+        } else {
+            var $paraSpan = $("<span>", {
+                id: key,
+                text: moment().hours(value).minutes(0).seconds(0).format('h')+"AM"
+            });
+        }
+        
+        var $textInp = $("<textarea>", {
+            "class": "col-md-10"
+        });
+        
+        var $btn = $("<button>", {
+            "class": "saveBtn col-md-1",
+            text: "Save"
+        });
+        
+        $para.append($paraSpan);
+        $smallDiv.append($para, $textInp, $btn);
+        $div.append($smallDiv);
+        $div.insertAfter($("header"));
+    })
+
+    // for each element with the hourHook class, apply the function that compares the current time with the set time in the hour block, and appropriately color the textarea
+    var colorCode = function() {
         $.each($(".hourHook"),function() {
             var numConv = numLetts[($(this).find("span").attr('id'))];
             var hourInt = moment().hours(numConv).minutes(0).seconds(0);
@@ -58,9 +74,9 @@ $(document).ready(function() {
             } else {
                 $(this).next().css("background-color","#ff6961");
             }
-        })
+        });
     };
-
+        
     // saving input to local storage. event listener applied to all buttons. if the user saves an empty block, clear localstorage for that key
     $("button").on("click", function (event) {
         event.preventDefault();
@@ -78,11 +94,10 @@ $(document).ready(function() {
 
     // calling functions
     updateTime();
-    updateColor();
     colorCode();
 
     // set interval to continuously call functions. ensures color coding is updated and that the displayed time is correct, by the second 
     setInterval(updateTime, 1000);
     setInterval(colorCode, 1000);
-
+    
 });
