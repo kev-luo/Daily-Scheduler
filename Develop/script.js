@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    // putting variables in functions to avoid global variables
+    // setting current time display
     var updateTime = function () {
         var currentTime = moment().format('h:mm:ss');
         $("#currentDay").text(currentTime);
@@ -27,6 +27,34 @@ $(document).ready(function() {
         $("#sixteen").text(four.format('h'));
         $("#seventeen").text(five.format('h'));
 
+        // var numLetts = {
+        //     nine: 9,
+        //     ten: 10,
+        //     eleven: 11,
+        //     twelve: 12,
+        //     thirteen: 13,
+        //     fourteen: 14,
+        //     fifteen: 15,
+        //     sixteen: 16,
+        //     seventeen: 17
+        // };
+
+        // $.each($(".hourHook"),function() {
+        //     var numConv = numLetts[($(this).find("span").attr('id'))];
+        //     var hourInt = moment().hours(numConv).minutes(0).seconds(0);
+
+        //     if (hourInt.diff(moment(),'seconds') < -3600) {
+        //         $(this).next().css("background-color","#d3d3d3");
+        //     } else if (hourInt.diff(moment(),'seconds') > 0) {
+        //         $(this).next().css("background-color","#77dd77");
+        //     } else {
+        //         $(this).next().css("background-color","#ff6961");
+        //     }
+        // })
+    } 
+
+    // function to color code blocks
+    var colorCode = function() {
         var numLetts = {
             nine: 9,
             ten: 10,
@@ -51,7 +79,7 @@ $(document).ready(function() {
                 $(this).next().css("background-color","#ff6961");
             }
         })
-    } 
+    }
 
     // saving input to local storage
     $("button").on("click", function (event) {
@@ -68,13 +96,14 @@ $(document).ready(function() {
         $(this).val(storedItems);
     })
 
-    // calling function to initially set time
+    // calling functions
     updateTime();
     updateColor();
+    colorCode();
 
-    // set interval to continuously call function
+    // set interval to continuously call functions
     setInterval(updateTime, 1000);
-    setInterval(updateColor, 1000);
+    setInterval(colorCode, 1000);
 
 
 });
