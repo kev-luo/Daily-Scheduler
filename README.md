@@ -28,13 +28,14 @@ If there are a lot of features consider adding a heading called "features" and l
 * License
 
 ## Process
-**HTML**
 
-Since the styling for the hour block, text block, and save button were provided to us, adding the rows required little more than minor styling to align the elements in each row. I also added ID's to the hour blocks to aid in the process of color coding the blocks based on the difference between the blocks' displayed time and the current time.
+The anonymous function defined within updateTime displays the current date at the top of the page. This was a big help in familiarizing myself with the Moment.js library. Next I initialized the object numLetts, assigning it key/value pairs of the hours needed in the scheduler app. This object were used to create the HTML elements. 
 
-**JavaScript**
+In the next section of the script I used each() to loop through the numLetts object. For each of the key/value pairs I created the elements used to render one time block row. I used the keys to create ID's for each row, and the values+Moment.js to display the hours for each hour block.
 
-The anonymous function defined within updateTime displays the current date at the top of the page. This was  abig help in familiarizing myself with the Moment.js library. Next the anonymous function timeBlockHour set the current day's work hours (9am-5pm).  
+The next step was color-coding each block. Using each() I looped through all the textareas. For each loop I retrieved an ID that corresponded to a key in the numLetts object, allowing me to input the key's matching value as a parameter to a Moment.js call. I compared the current time to the top of each hour so that the color would accurate down to the second. At the bottom of my script I called this function every second so that the page wouldn't have to be refreshed in order to stay up-to-date.
+
+Finally, I applied a click event listener to all the buttons. This would save anything typed into the textarea into local storage, using the row's ID as the key. If the textarea was blank it would delete the corresponding key from local storage. Again using each() the script loops through all textareas to retrieve and display text from local storage - this occurs when the page loads.
 
 ## Usage
 To begin the quiz, simply follow the link below and click the "Let's Do This" button. 
