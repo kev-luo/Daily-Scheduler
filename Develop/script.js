@@ -39,54 +39,34 @@ $(document).ready(function() {
             seventeen: 17
         };
 
-        console.log(moment().diff(moment().hours(17).minutes(0).seconds(0),'hours'));
         $.each($(".hourHook"),function() {
             var numConv = numLetts[($(this).find("span").attr('id'))];
             var hourInt = moment().hours(numConv).minutes(0).seconds(0);
-            // console.log(numLetts[($(this).find("span").attr('id'))]);
-            // console.log(moment(),'seconds');
-            // console.log(hourInt);
 
-               if (hourInt.diff(moment(),'seconds') < -3600) {
-            // if (hourInt.diff(moment(),'seconds') < -3600) {
+            if (hourInt.diff(moment(),'seconds') < -3600) {
                 $(this).next().css("background-color","#d3d3d3");
-
-               } else if (hourInt.diff(moment(),'seconds') > 0) {
-            // } else if (hourInt.diff(moment(),'seconds') > 0) {
+            } else if (hourInt.diff(moment(),'seconds') > 0) {
                 $(this).next().css("background-color","#77dd77");
             } else {
                 $(this).next().css("background-color","#ff6961");
             }
         })
-        
-
-
-        // $(".col-md-10").css("background-color",)
     } 
 
     // saving input to local storage
     $("button").on("click", function (event) {
         event.preventDefault();
         var textItem = $(this).prev().val();
-        localStorage.setItem($(this).parent().find("span").attr('id'),textItem.trim());
-
+        var findID = $(this).parent().find("span").attr("id");
+        localStorage.setItem(findID,textItem.trim());
     });
 
-    window.onbeforeunload = function() {
-        $.each($(".hour"), function() {
-            // console.log($(this).children("span").attr("id"));
-            // console.log(JSON.parse(localStorage.getItem($(this).children("span").attr("id"))));
-            console.log($(this).next());
-            // var items = (localStorage.getItem($(this).children("span").attr("id")));
-            
-            $(this).next().val((localStorage.getItem($(this).children("span").attr("id"))));
-            // $("#currentDay").append($("<div>").val($this).find("span").attr("id"));
-            // console.log(localStorage.getItem($(".container").find("span").attr("id")));
-
-            // var oldItems = localStorage.getItem($(".container").find("span").attr("id"));
-            // $(".container").find(".col-md-10").val(oldItems);
-        })
-    }
+    // get items from local storage
+    $("textarea").each(function() {
+        var findID = $(this).prev().find("span").attr("id");
+        var storedItems = localStorage.getItem(findID);
+        $(this).val(storedItems);
+    })
 
     // calling function to initially set time
     updateTime();
